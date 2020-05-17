@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gfinder/widgets/my_scaffold.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:gfinder/control/navigation_mode.dart';
@@ -17,15 +18,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final _myAppBar = AppBar(
-      backgroundColor: Colors.black,
-      centerTitle: true,
-      title: Text(
-        'Gfinder',
-        style: GoogleFonts.roboto(),
-      ),
-    );
-
     final _searchField = Padding(
         padding: EdgeInsets.all(10.0),
         child: TextField(
@@ -52,31 +44,29 @@ class _HomePageState extends State<HomePage> {
       ),
     );
 
-    return Scaffold(
-        appBar: _myAppBar,
-        backgroundColor: Colors.black,
+    return MyScaffold(
         body: Column(
-          children: <Widget>[
-            _searchField,
-            Expanded(
-                child: FutureBuilder(
-                    future: _gifRequester.fetchGifs(_search),
-                    builder: (context, snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.done:
-                          return GifGridView(
-                              snapshot: snapshot,
-                              navigationMode: _search == null
-                                  ? NavigationMode.trending
-                                  : NavigationMode.search,
-                              redrawHomePage: (() {
-                                setState(() {});
-                              }));
-                        default:
-                          return _progressIndicatorContainer;
-                      }
-                    }))
-          ],
-        ));
+      children: <Widget>[
+        _searchField,
+        Expanded(
+            child: FutureBuilder(
+                future: _gifRequester.fetchGifs(_search),
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.done:
+                      return GifGridView(
+                          snapshot: snapshot,
+                          navigationMode: _search == null
+                              ? NavigationMode.trending
+                              : NavigationMode.search,
+                          redrawHomePage: (() {
+                            setState(() {});
+                          }));
+                    default:
+                      return _progressIndicatorContainer;
+                  }
+                }))
+      ],
+    ));
   }
 }

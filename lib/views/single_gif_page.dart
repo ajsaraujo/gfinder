@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gfinder/widgets/my_scaffold.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:share/share.dart';
 
@@ -9,13 +10,7 @@ class SingleGifPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text('Gfinder', style: GoogleFonts.roboto()),
-          backgroundColor: Colors.black,
-        ),
-        backgroundColor: Colors.black,
+    return MyScaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gfinder/control/navigation_mode.dart';
 import 'package:gfinder/views/single_gif_page.dart';
 import 'package:gfinder/widgets/gif_grid_item.dart';
+import 'package:gfinder/widgets/gif_grid_view.dart';
+import 'package:gfinder/widgets/load_more_gifs_button.dart';
 import 'package:share/share.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -50,7 +53,14 @@ class _HomePageState extends State<HomePage> {
                     builder: (context, snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.done:
-                          return _createGifTable(context, snapshot);
+                          return GifGridView(
+                              snapshot: snapshot,
+                              navigationMode: _search == null
+                                  ? NavigationMode.trending
+                                  : NavigationMode.search,
+                              redrawHomePage: (() {
+                                setState(() {});
+                              }));
                         default:
                           return Container(
                             width: 200.0,
@@ -83,19 +93,9 @@ class _HomePageState extends State<HomePage> {
         if (_search == null || index < snapshot.data['data'].length) {
           return GifGridItem(gifData: snapshot.data['data'][index]);
         } else {
-          return Container(
-              child: GestureDetector(
-                  onTap: () {
-                    setState(() {});
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(Icons.add, color: Colors.white, size: 70.0),
-                      Text('Load more...',
-                          style: TextStyle(color: Colors.white, fontSize: 17.0))
-                    ],
-                  )));
+          return LoadMoreGifsButton(redrawHomePage: () {
+            setState(() {});
+          });
         }
       },
       padding: EdgeInsets.all(10.0),

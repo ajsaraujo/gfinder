@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:share/share.dart';
 
 class SingleGifPage extends StatelessWidget {
@@ -10,7 +11,8 @@ class SingleGifPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(gifData['title']),
+        centerTitle: true,
+        title: Text('Gfinder', style: GoogleFonts.roboto()),
         backgroundColor: Colors.black,
         actions: <Widget>[
           IconButton(
@@ -22,8 +24,18 @@ class SingleGifPage extends StatelessWidget {
         ],
       ),
       backgroundColor: Colors.black,
-      body: Center(
-        child: Image.network(gifData['images']['fixed_height']['url'])
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(gifData['title'], textAlign: TextAlign.center, style: TextStyle(
+            color: Colors.white,
+            fontSize: 18.0,
+          )),
+          SizedBox(height: 10.0),
+          Center(
+            child: Image.network(gifData['images']['fixed_height']['url'])
+          )
+        ],
       )
     );
   }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 import 'package:gfinder/control/navigation_mode.dart';
 import 'package:gfinder/widgets/gif_grid_view.dart';
 
@@ -18,27 +20,27 @@ class _HomePageState extends State<HomePage> {
     final _myAppBar = AppBar(
       backgroundColor: Colors.black,
       centerTitle: true,
-      title: Text('GFINDER',
-          style: TextStyle(
-            color: Colors.white,
-          )),
+      title: Text(
+        'Gfinder',
+        style: GoogleFonts.roboto(),
+      ),
     );
 
     final _searchField = Padding(
-      padding: EdgeInsets.all(10.0),
-      child: TextField(
-        style: TextStyle(color: Colors.white, fontSize: 18.0),
-        textAlign: TextAlign.center,
-        decoration: InputDecoration(
-          labelText: 'Search GIFs',
-          labelStyle: TextStyle(color: Colors.white),
-          border: OutlineInputBorder(),
-        ),
-        onSubmitted: (String value) {
-          setState(() {
-            _search = value;
-          });
-        }));
+        padding: EdgeInsets.all(10.0),
+        child: TextField(
+            style: TextStyle(color: Colors.white, fontSize: 18.0),
+            textAlign: TextAlign.center,
+            decoration: InputDecoration(
+              labelText: 'Search GIFs',
+              labelStyle: TextStyle(color: Colors.white),
+              border: OutlineInputBorder(),
+            ),
+            onSubmitted: (String value) {
+              setState(() {
+                _search = value;
+              });
+            }));
 
     final _progressIndicatorContainer = Container(
       width: 200.0,

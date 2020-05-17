@@ -1,10 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:gfinder/ui/show_gif.dart';
-import 'package:http/http.dart' as http;
+import 'package:gfinder/views/show_gif.dart';
 import 'package:share/share.dart';
 import 'package:transparent_image/transparent_image.dart';
+
+import 'package:gfinder/control/gif_requester.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,24 +12,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String _search;
-  int _offset = 0;
-
-  _getGifs() async {
-    String url;
-
-    if (_search == null || _search.isEmpty) {
-      url =
-          'https://api.giphy.com/v1/gifs/trending?api_key=01BdxRWujnufHK49HzxbDee0BSilRkwI&limit=19&rating=G';
-    } else {
-      url =
-          'https://api.giphy.com/v1/gifs/search?api_key=01BdxRWujnufHK49HzxbDee0BSilRkwI&q=${_search}&limit=25&offset=${_offset}&rating=G&lang=en';
-    }
-
-    final response = await http.get(url);
-    final decoded = await json.decode(response.body);
-
-    return decoded;
-  }
+  final _gifRequester = GifRequester();
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +34,6 @@ class _HomePageState extends State<HomePage> {
                     onSubmitted: (String value) {
                       setState(() {
                         _search = value;
-                        _offset = 0;
                       });
                     },
                     decoration: InputDecoration(
@@ -64,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                     textAlign: TextAlign.center)),
             Expanded(
                 child: FutureBuilder(
-                    future: _getGifs(),
+                    future: _gifRequester.fetchGifs(_search),
                     builder: (context, snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
@@ -125,9 +106,7 @@ class _HomePageState extends State<HomePage> {
           return Container(
               child: GestureDetector(
                   onTap: () {
-                    setState(() {
-                      _offset += 19;
-                    });
+                    setState(() {});
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

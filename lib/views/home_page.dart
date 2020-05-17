@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gfinder/views/show_gif.dart';
+import 'package:gfinder/views/single_gif_page.dart';
+import 'package:gfinder/widgets/gif_grid_item.dart';
 import 'package:share/share.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -48,9 +49,9 @@ class _HomePageState extends State<HomePage> {
                     future: _gifRequester.fetchGifs(_search),
                     builder: (context, snapshot) {
                       switch (snapshot.connectionState) {
-                        case ConnectionState.waiting:
-                        case ConnectionState.none:
-                        case ConnectionState.active:
+                        case ConnectionState.done:
+                          return _createGifTable(context, snapshot);
+                        default:
                           return Container(
                             width: 200.0,
                             height: 200.0,
@@ -61,8 +62,6 @@ class _HomePageState extends State<HomePage> {
                               strokeWidth: 5.0,
                             ),
                           );
-                        case ConnectionState.done:
-                          return _createGifTable(context, snapshot);
                       }
                     }))
           ],
@@ -82,26 +81,7 @@ class _HomePageState extends State<HomePage> {
       itemCount: _itemCount,
       itemBuilder: (context, index) {
         if (_search == null || index < snapshot.data['data'].length) {
-          return GestureDetector(
-              onLongPress: () {
-                Share.share(snapshot.data['data'][index]['images']
-                    ['fixed_height']['url']);
-              },
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ShowGif(
-                              gifData: snapshot.data['data'][index],
-                            )));
-              },
-              child: FadeInImage.memoryNetwork(
-                placeholder: kTransparentImage,
-                image: snapshot.data['data'][index]['images']['fixed_height']
-                    ['url'],
-                height: 300.0,
-                fit: BoxFit.cover,
-              ));
+          return GifGridItem(gifData: snapshot.data['data'][index]);
         } else {
           return Container(
               child: GestureDetector(

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
-class ShowGif extends StatelessWidget {
+class SingleGifPage extends StatelessWidget {
   final Map gifData;
   
-  ShowGif({this.gifData});
+  SingleGifPage({this.gifData});
 
   @override
   Widget build(BuildContext context) {

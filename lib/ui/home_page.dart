@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:gfinder/ui/show_gif.dart';
 import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
@@ -99,27 +100,34 @@ class _HomePageState extends State<HomePage> {
       itemBuilder: (context, index) {
         if (_search == null || index < snapshot.data['data'].length) {
           return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ShowGif(
+                              gifData: snapshot.data['data'][index],
+                            )));
+              },
               child: Image.network(
                   snapshot.data['data'][index]['images']['fixed_height']['url'],
                   height: 300.0,
                   fit: BoxFit.cover));
         } else {
           return Container(
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _offset += 19;
-                });
-              },
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(Icons.add, color: Colors.white, size: 70.0),
-                  Text('Load more...', style: TextStyle(color: Colors.white, fontSize: 17.0))
-                ],
-              )
-            )
-          );
+              child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _offset += 19;
+                    });
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.add, color: Colors.white, size: 70.0),
+                      Text('Load more...',
+                          style: TextStyle(color: Colors.white, fontSize: 17.0))
+                    ],
+                  )));
         }
       },
       padding: EdgeInsets.all(10.0),

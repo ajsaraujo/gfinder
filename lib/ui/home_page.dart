@@ -17,14 +17,14 @@ class _HomePageState extends State<HomePage> {
 
     if (_search == null) {
       url =
-          'https://api.giphy.com/v1/gifs/trending?api_key=01BdxRWujnufHK49HzxbDee0BSilRkwI&limit=20&rating=R';
+          'https://api.giphy.com/v1/gifs/trending?api_key=01BdxRWujnufHK49HzxbDee0BSilRkwI&limit=19&rating=G';
     } else {
       url =
           'https://api.giphy.com/v1/gifs/search?api_key=01BdxRWujnufHK49HzxbDee0BSilRkwI&q=${_search}&limit=25&offset=${_offset}&rating=G&lang=en';
     }
 
     final response = await http.get(url);
-    final decoded = json.decode(response.body);
+    final decoded = await json.decode(response.body);
 
     return decoded;
   }
@@ -46,6 +46,12 @@ class _HomePageState extends State<HomePage> {
             Padding(
                 padding: EdgeInsets.all(10.0),
                 child: TextField(
+                    onSubmitted: (String value) {
+                      setState(() {
+                        _search = value;
+                        _offset = 0;
+                      });
+                    },
                     decoration: InputDecoration(
                       labelText: 'Search GIFs',
                       labelStyle: TextStyle(color: Colors.white),
@@ -60,6 +66,7 @@ class _HomePageState extends State<HomePage> {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
                         case ConnectionState.none:
+                        case ConnectionState.active:
                           return Container(
                             width: 200.0,
                             height: 200.0,
@@ -70,10 +77,7 @@ class _HomePageState extends State<HomePage> {
                               strokeWidth: 5.0,
                             ),
                           );
-                        default:
-                          if (snapshot.hasError) {
-                            return Container();
-                          }
+                        case ConnectionState.done:
                           return _createGifTable(context, snapshot);
                       }
                     }))
@@ -82,19 +86,41 @@ class _HomePageState extends State<HomePage> {
   }
 
   _createGifTable(BuildContext context, AsyncSnapshot snapshot) {
+    int _itemCount = snapshot.data['data'].length;
+    if (_search != null) _itemCount++;
+
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 10.0,
         mainAxisSpacing: 10.0,
       ),
-      itemCount: snapshot.data.length,
+      itemCount: _itemCount,
       itemBuilder: (context, index) {
-        return GestureDetector(
-            child: Image.network(
-                snapshot.data['data'][index]['images']['fixed_height']['url'],
-                height: 300.0,
-                fit: BoxFit.cover));
+        if (_search == null || index < snapshot.data['data'].length) {
+          return GestureDetector(
+              child: Image.network(
+                  snapshot.data['data'][index]['images']['fixed_height']['url'],
+                  height: 300.0,
+                  fit: BoxFit.cover));
+        } else {
+          return Container(
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  _offset += 19;
+                });
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(Icons.add, color: Colors.white, size: 70.0),
+                  Text('Load more...', style: TextStyle(color: Colors.white, fontSize: 17.0))
+                ],
+              )
+            )
+          );
+        }
       },
       padding: EdgeInsets.all(10.0),
     );

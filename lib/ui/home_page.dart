@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gfinder/ui/show_gif.dart';
 import 'package:http/http.dart' as http;
 import 'package:share/share.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -17,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   _getGifs() async {
     String url;
 
-    if (_search == null) {
+    if (_search == null || _search.isEmpty) {
       url =
           'https://api.giphy.com/v1/gifs/trending?api_key=01BdxRWujnufHK49HzxbDee0BSilRkwI&limit=19&rating=G';
     } else {
@@ -113,10 +114,13 @@ class _HomePageState extends State<HomePage> {
                               gifData: snapshot.data['data'][index],
                             )));
               },
-              child: Image.network(
-                  snapshot.data['data'][index]['images']['fixed_height']['url'],
-                  height: 300.0,
-                  fit: BoxFit.cover));
+              child: FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image: snapshot.data['data'][index]['images']['fixed_height']
+                    ['url'],
+                height: 300.0,
+                fit: BoxFit.cover,
+              ));
         } else {
           return Container(
               child: GestureDetector(

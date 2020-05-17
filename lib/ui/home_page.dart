@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gfinder/ui/show_gif.dart';
 import 'package:http/http.dart' as http;
+import 'package:share/share.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -100,6 +101,10 @@ class _HomePageState extends State<HomePage> {
       itemBuilder: (context, index) {
         if (_search == null || index < snapshot.data['data'].length) {
           return GestureDetector(
+              onLongPress: () {
+                Share.share(snapshot.data['data'][index]['images']
+                    ['fixed_height']['url']);
+              },
               onTap: () {
                 Navigator.push(
                     context,

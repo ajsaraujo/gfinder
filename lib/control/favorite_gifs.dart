@@ -11,6 +11,13 @@ class FavoriteGifs {
 
   FavoriteGifs._internal();
 
+  List get gifList {
+    favoriteGifs.forEach((key, value) {
+      print('[DEBUG] key = $key');
+      print('[DEBUG] value = $value');
+    });
+  }
+
   bool isFavorite(String gifId) {
     return favoriteGifs[gifId] != null;
   }

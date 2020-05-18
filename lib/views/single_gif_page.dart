@@ -24,7 +24,8 @@ class SingleGifPage extends StatelessWidget {
             SizedBox(height: 20.0),
             GifActionsRow(
               gifTitle: gifData['title'],
-              gifUrl: gifData['images']['fixed_height']['url']
+              gifUrl: gifData['images']['fixed_height']['url'],
+              gifId: gifData['id'],
             ),
           ],
         ));

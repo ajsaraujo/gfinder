@@ -3,9 +3,11 @@ import 'package:gfinder/widgets/gif_actions_row.dart';
 import 'package:gfinder/widgets/my_scaffold.dart';
 
 class SingleGifPage extends StatelessWidget {
-  final Map gifData;
+  final String gifUrl;
+  final String gifId;
+  final String gifTitle;
 
-  SingleGifPage({this.gifData});
+  SingleGifPage({this.gifUrl, this.gifId, this.gifTitle});
 
   @override
   Widget build(BuildContext context) {
@@ -13,19 +15,19 @@ class SingleGifPage extends StatelessWidget {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(gifData['title'],
+            Text(gifTitle,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 18.0,
                 )),
             SizedBox(height: 20.0),
-            Image.network(gifData['images']['fixed_height']['url']),
+            Image.network(gifUrl),
             SizedBox(height: 20.0),
             GifActionsRow(
-              gifTitle: gifData['title'],
-              gifUrl: gifData['images']['fixed_height']['url'],
-              gifId: gifData['id'],
+              gifTitle: this.gifTitle,
+              gifUrl: this.gifUrl,
+              gifId: this.gifId,
             ),
           ],
         ));

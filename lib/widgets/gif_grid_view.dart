@@ -32,7 +32,11 @@ class GifGridView extends StatelessWidget {
             redrawHomePage: this.redrawHomePage,
           );
         }
-        return GifGridItem(gifData: snapshot.data['data'][index]);
+        final gifData = snapshot.data['data'][index];
+        return GifGridItem(
+            gifId: gifData['id'],
+            gifUrl: gifData['images']['fixed_height']['url'],
+            gifTitle: gifData['title']);
       },
       padding: EdgeInsets.all(10.0),
     );

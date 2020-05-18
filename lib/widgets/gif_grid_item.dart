@@ -4,27 +4,31 @@ import 'package:share/share.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class GifGridItem extends StatelessWidget {
-  final gifData;
+  final String gifUrl;
+  final String gifTitle;
+  final String gifId;
 
-  GifGridItem({this.gifData});
+  GifGridItem({this.gifUrl, this.gifTitle, this.gifId});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onLongPress: () {
-          Share.share(gifData['images']['fixed_height']['url']);
+          Share.share(gifUrl);
         },
         onTap: () {
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => SingleGifPage(
-                        gifData: this.gifData,
+                        gifUrl: this.gifUrl,
+                        gifTitle: this.gifTitle,
+                        gifId: this.gifId,
                       )));
         },
         child: FadeInImage.memoryNetwork(
           placeholder: kTransparentImage,
-          image: this.gifData['images']['fixed_height']['url'],
+          image: gifUrl,
           height: 300.0,
           fit: BoxFit.cover,
         ));

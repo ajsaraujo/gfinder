@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
     final _searchField = Padding(
         padding: EdgeInsets.all(10.0),
         child: TextField(
+            textInputAction: TextInputAction.search,
             style: TextStyle(color: Colors.white, fontSize: 18.0),
             textAlign: TextAlign.left,
             decoration: InputDecoration(

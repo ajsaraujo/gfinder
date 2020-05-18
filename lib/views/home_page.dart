@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gfinder/widgets/my_scaffold.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import 'package:gfinder/widgets/my_scaffold.dart';
 import 'package:gfinder/control/navigation_mode.dart';
 import 'package:gfinder/widgets/gif_grid_view.dart';
-
 import 'package:gfinder/control/gif_requester.dart';
 
 class HomePage extends StatefulWidget {

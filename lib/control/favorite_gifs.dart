@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import './file_controller.dart';
+import 'file_controller.dart';
 
 class FavoriteGifs {
   Map<String, dynamic> favoriteGifs;
@@ -12,20 +12,8 @@ class FavoriteGifs {
   }
 
   FavoriteGifs._internal();
-  
-  void loadGifsFromFile() {
-    FileController.parseFavoriteGifsFile().then((jsonData) {
-      favoriteGifs = json.decode(jsonData);
-    });
-  }
 
-  void markGifAsFavorite(String gifUrl, String gifTitle) {
-    favoriteGifs[gifUrl] = gifTitle; 
-    FileController.saveFavoriteGifs(favoriteGifs);
-  }
-
-  void removeGifFromFavorites(String gifUrl) {
-    favoriteGifs.remove(gifUrl);
-    FileController.saveFavoriteGifs(favoriteGifs);
+  bool isFavorite(String gifUrl) {
+    return true;
   }
 }

@@ -20,10 +20,8 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     final _favoriteController = FavoriteGifs();
-    print('[DEBUG] Lendo arquivo...');
     FileController.readFavoriteGifs().then((data) {
       _favoriteController.favoriteGifs = data;
-      print('[DEBUG] Lido! favoriteGifs = $data');
     });
   }
 
@@ -33,11 +31,14 @@ class _HomePageState extends State<HomePage> {
         padding: EdgeInsets.all(10.0),
         child: TextField(
             style: TextStyle(color: Colors.white, fontSize: 18.0),
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.left,
             decoration: InputDecoration(
-              labelText: 'Search GIFs',
+              hintText: 'Search GIFs',
+              hintStyle: TextStyle(fontSize: 14.0),
               labelStyle: TextStyle(color: Colors.white),
-              border: OutlineInputBorder(),
+              prefixIcon: Icon(Icons.search, color: Colors.white),
+              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white))
             ),
             onSubmitted: (String value) {
               setState(() {

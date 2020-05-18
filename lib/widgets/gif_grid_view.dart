@@ -4,13 +4,13 @@ import 'gif_grid_item.dart';
 import 'load_more_gifs_button.dart';
 
 class GifGridView extends StatelessWidget {
-  final AsyncSnapshot snapshot;
+  final List gifList;
   final NavigationMode navigationMode;
   final Function redrawHomePage;
   int _itemCount;
 
-  GifGridView({this.snapshot, this.redrawHomePage, this.navigationMode}) {
-    _itemCount = snapshot.data['data'].length;
+  GifGridView({this.gifList, this.redrawHomePage, this.navigationMode}) {
+    _itemCount = gifList.length;
 
     // The last item will be the "Load More" button.
     if (navigationMode == NavigationMode.search) _itemCount++;
@@ -32,7 +32,7 @@ class GifGridView extends StatelessWidget {
             redrawHomePage: this.redrawHomePage,
           );
         }
-        final gifData = snapshot.data['data'][index];
+        final gifData = gifList[index];
         return GifGridItem(
             gifId: gifData['id'],
             gifUrl: gifData['images']['fixed_height']['url'],

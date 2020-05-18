@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                   switch (snapshot.connectionState) {
                     case ConnectionState.done:
                       return GifGridView(
-                          snapshot: snapshot,
+                          gifList: snapshot.data['data'],
                           navigationMode: _search == null
                               ? NavigationMode.trending
                               : NavigationMode.search,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:gfinder/control/favorite_gifs.dart';
+import 'package:gfinder/control/file_controller.dart';
 import 'package:gfinder/widgets/my_scaffold.dart';
 import 'package:gfinder/control/navigation_mode.dart';
 import 'package:gfinder/widgets/gif_grid_view.dart';
@@ -13,6 +14,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String _search;
   final _gifRequester = GifRequester();
+
+  @override
+  void initState() {
+    super.initState();
+
+    final _favoriteController = FavoriteGifs();
+    print('[DEBUG] Lendo arquivo...');
+    FileController.readFavoriteGifs().then((data) {
+      _favoriteController.favoriteGifs = data;
+      print('[DEBUG] Lido! favoriteGifs = $data');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

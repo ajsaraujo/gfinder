@@ -1,7 +1,3 @@
-import 'dart:convert';
-
-import 'file_controller.dart';
-
 class FavoriteGifs {
   Map<String, dynamic> favoriteGifs;
   
@@ -14,6 +10,6 @@ class FavoriteGifs {
   FavoriteGifs._internal();
 
   bool isFavorite(String gifUrl) {
-    return true;
+    return favoriteGifs[gifUrl] != null;
   }
 }

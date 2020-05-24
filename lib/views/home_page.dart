@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gfinder/control/favorite_gifs.dart';
 import 'package:gfinder/control/file_controller.dart';
 import 'package:gfinder/widgets/my_scaffold.dart';
-import 'package:gfinder/control/navigation_mode.dart';
 import 'package:gfinder/widgets/gif_grid_view.dart';
 import 'package:gfinder/control/gif_requester.dart';
-
+import '../models/gif.dart';
+import '../control/navigation_mode.dart';
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                   switch (snapshot.connectionState) {
                     case ConnectionState.done:
                       return GifGridView(
-                          gifList: snapshot.data['data'],
+                          gifList: Gif.gifListFromSnapshot(snapshot), 
                           navigationMode: _search == null
                               ? NavigationMode.trending
                               : NavigationMode.search,

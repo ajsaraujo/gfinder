@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gfinder/control/favorite_gifs.dart';
+import 'package:gfinder/control/navigation_mode.dart';
+import 'package:gfinder/widgets/gif_grid_view.dart';
 import '../widgets/my_scaffold.dart';
 
 class FavoriteGifsPage extends StatelessWidget {  
@@ -11,7 +13,16 @@ class FavoriteGifsPage extends StatelessWidget {
     print('You marked ${gifList.length} gifs as favorites');
     return MyScaffold(
       title: 'Favorite GIFs',
-      body: Container()
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: GifGridView(
+              gifList: favoriteGifs.favoriteGifList(),
+              navigationMode: NavigationMode.trending,
+            )
+          )
+        ],
+      )
     );
   }
 }

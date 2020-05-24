@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gfinder/models/gif.dart';
 import '../control/navigation_mode.dart';
 import 'gif_grid_item.dart';
 import 'load_more_gifs_button.dart';

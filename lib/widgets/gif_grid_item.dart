@@ -19,11 +19,7 @@ class GifGridItem extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => SingleGifPage(
-                        gifUrl: this.gif.url,
-                        gifTitle: this.gif.title,
-                        gifId: this.gif.id,
-                      )));
+                  builder: (context) => SingleGifPage(gif: this.gif)));
         },
         child: FadeInImage.memoryNetwork(
           placeholder: kTransparentImage,

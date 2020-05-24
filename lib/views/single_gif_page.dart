@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:gfinder/models/gif.dart';
 import 'package:gfinder/widgets/gif_actions_row.dart';
 import 'package:gfinder/widgets/my_scaffold.dart';
 
 class SingleGifPage extends StatelessWidget {
-  final String gifUrl;
-  final String gifId;
-  final String gifTitle;
+  final Gif gif;
 
-  SingleGifPage({this.gifUrl, this.gifId, this.gifTitle});
+  SingleGifPage({this.gif});
 
   @override
   Widget build(BuildContext context) {
@@ -15,19 +14,17 @@ class SingleGifPage extends StatelessWidget {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(gifTitle,
+            Text(this.gif.title,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 18.0,
                 )),
             SizedBox(height: 20.0),
-            Image.network(gifUrl),
+            Image.network(this.gif.url),
             SizedBox(height: 20.0),
             GifActionsRow(
-              gifTitle: this.gifTitle,
-              gifUrl: this.gifUrl,
-              gifId: this.gifId,
+              gif: this.gif
             ),
           ],
         ));

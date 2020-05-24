@@ -5,8 +5,8 @@ import 'load_more_gifs_button.dart';
 
 class GifGridView extends StatelessWidget {
   final List gifList;
-  final NavigationMode navigationMode;
   final Function redrawHomePage;
+  final NavigationMode navigationMode;
   int _itemCount;
 
   GifGridView({this.gifList, this.redrawHomePage, this.navigationMode}) {

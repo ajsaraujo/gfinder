@@ -1,1 +1,1 @@
-enum NavigationMode { trending, search }
+enum NavigationMode { trending, search, favorites }

@@ -6,8 +6,9 @@ import 'package:transparent_image/transparent_image.dart';
 
 class GifGridItem extends StatelessWidget {
   final Gif gif;
+  final Function redrawFavoritesPage;
 
-  GifGridItem({this.gif});
+  GifGridItem({this.gif, this.redrawFavoritesPage});
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +16,16 @@ class GifGridItem extends StatelessWidget {
         onLongPress: () {
           Share.share(this.gif.url);
         },
-        onTap: () {
-          Navigator.push(
+        onTap: () async {
+          final favoriteStateChanged = await Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => SingleGifPage(gif: this.gif)));
+          if (this.redrawFavoritesPage != null && favoriteStateChanged) {
+            print(' > É preciso redesenhar a página!');
+          } else {
+            print(' > Não é preciso redesenhar a página!');
+          }
         },
         child: FadeInImage.memoryNetwork(
           placeholder: kTransparentImage,

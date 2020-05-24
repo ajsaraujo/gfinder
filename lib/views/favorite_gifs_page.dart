@@ -18,7 +18,7 @@ class FavoriteGifsPage extends StatelessWidget {
           Expanded(
             child: GifGridView(
               gifList: favoriteGifs.favoriteGifList(),
-              navigationMode: NavigationMode.trending,
+              navigationMode: NavigationMode.favorites,
             )
           )
         ],

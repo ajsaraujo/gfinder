@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gfinder/models/gif.dart';
 import '../control/navigation_mode.dart';
 import 'gif_grid_item.dart';
 import 'load_more_gifs_button.dart';
@@ -33,10 +34,13 @@ class GifGridView extends StatelessWidget {
           );
         }
         final gifData = gifList[index];
-        return GifGridItem(
-            gifId: gifData['id'],
-            gifUrl: gifData['images']['fixed_height']['url'],
-            gifTitle: gifData['title']);
+        
+        final newGif = Gif(
+            id: gifData['id'],
+            url: gifData['images']['fixed_height']['url'],
+            title: gifData['title']);
+
+        return GifGridItem(gif: newGif);
       },
       padding: EdgeInsets.all(10.0),
     );

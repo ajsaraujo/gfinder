@@ -1,34 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:gfinder/models/gif.dart';
 import 'package:gfinder/views/single_gif_page.dart';
 import 'package:share/share.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class GifGridItem extends StatelessWidget {
-  final String gifUrl;
-  final String gifTitle;
-  final String gifId;
+  final Gif gif;
 
-  GifGridItem({this.gifUrl, this.gifTitle, this.gifId});
+  GifGridItem({this.gif});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onLongPress: () {
-          Share.share(gifUrl);
+          Share.share(this.gif.url);
         },
         onTap: () {
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => SingleGifPage(
-                        gifUrl: this.gifUrl,
-                        gifTitle: this.gifTitle,
-                        gifId: this.gifId,
+                        gifUrl: this.gif.url,
+                        gifTitle: this.gif.title,
+                        gifId: this.gif.id,
                       )));
         },
         child: FadeInImage.memoryNetwork(
           placeholder: kTransparentImage,
-          image: gifUrl,
+          image: this.gif.url,
           height: 300.0,
           fit: BoxFit.cover,
         ));

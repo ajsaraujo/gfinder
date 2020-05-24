@@ -6,7 +6,7 @@ class FavoriteGifsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {    
     final favoriteGifs = FavoriteGifs();
-    final gifList = favoriteGifs.gifList;
+    final gifList = favoriteGifs.favoriteGifList();
 
     print('You marked ${gifList.length} gifs as favorites');
     return MyScaffold(

@@ -23,6 +23,7 @@ class GifGridItem extends StatelessWidget {
                   builder: (context) => SingleGifPage(gif: this.gif)));
           if (this.redrawFavoritesPage != null && favoriteStateChanged) {
             print(' > É preciso redesenhar a página!');
+            this.redrawFavoritesPage();
           } else {
             print(' > Não é preciso redesenhar a página!');
           }

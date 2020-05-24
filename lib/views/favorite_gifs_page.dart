@@ -4,7 +4,12 @@ import 'package:gfinder/control/navigation_mode.dart';
 import 'package:gfinder/widgets/gif_grid_view.dart';
 import '../widgets/my_scaffold.dart';
 
-class FavoriteGifsPage extends StatelessWidget {  
+class FavoriteGifsPage extends StatefulWidget {
+  @override
+  _FavoriteGifsPageState createState() => _FavoriteGifsPageState();
+}
+
+class _FavoriteGifsPageState extends State<FavoriteGifsPage> {
   @override
   Widget build(BuildContext context) {    
     final favoriteGifs = FavoriteGifs();
@@ -17,6 +22,7 @@ class FavoriteGifsPage extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: GifGridView(
+              redrawFavoritesPage: () { setState(() {}); },
               gifList: favoriteGifs.favoriteGifList(),
               navigationMode: NavigationMode.favorites,
             )

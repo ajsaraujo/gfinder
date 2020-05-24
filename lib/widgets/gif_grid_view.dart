@@ -3,7 +3,7 @@ import '../control/navigation_mode.dart';
 import 'gif_grid_item.dart';
 import 'load_more_gifs_button.dart';
 
-class GifGridView extends StatefulWidget {
+class GifGridView extends StatelessWidget {
   final List gifList;
   final Function redrawHomePage;
   final Function redrawFavoritesPage;
@@ -20,12 +20,7 @@ class GifGridView extends StatefulWidget {
     // The last item will be the "Load More" button.
     if (navigationMode == NavigationMode.search) _itemCount++;
   }
-
-  @override
-  _GifGridViewState createState() => _GifGridViewState();
-}
-
-class _GifGridViewState extends State<GifGridView> {
+  
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -34,18 +29,18 @@ class _GifGridViewState extends State<GifGridView> {
         crossAxisSpacing: 10.0,
         mainAxisSpacing: 10.0,
       ),
-      itemCount: this.widget._itemCount,
+      itemCount: _itemCount,
       itemBuilder: (context, index) {
-        if (this.widget.navigationMode == NavigationMode.search &&
-            index == this.widget._itemCount - 1) {
+        if (navigationMode == NavigationMode.search &&
+            index == _itemCount - 1) {
           return LoadMoreGifsButton(
-            redrawHomePage: this.widget.redrawHomePage,
+            redrawHomePage: redrawHomePage,
           );
         }
 
         return GifGridItem(
-            gif: this.widget.gifList[index],
-            redrawFavoritesPage: this.widget.redrawFavoritesPage);
+            gif: gifList[index],
+            redrawFavoritesPage: redrawFavoritesPage);
       },
       padding: EdgeInsets.all(10.0),
     );

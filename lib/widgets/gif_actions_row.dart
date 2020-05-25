@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gfinder/control/favorite_gifs.dart';
-import 'package:gfinder/models/gif.dart';
 import 'package:share/share.dart';
+
+import '../control/favorite_gifs.dart';
+import '../models/gif.dart';
 
 class GifActionsRow extends StatefulWidget {
   final Gif gif;
@@ -16,7 +17,6 @@ class _GifActionsRowState extends State<GifActionsRow> {
   final _favoriteController = FavoriteGifs();
 
   void _toggleFavorite(bool isFavorite) {
-    print('[DEBUG] Favoritando/Desfavoritando!');
     setState(() {
       if (isFavorite) {
         _favoriteController.removeGifFromFavorites(this.widget.gif.id);
@@ -30,7 +30,6 @@ class _GifActionsRowState extends State<GifActionsRow> {
   @override
   Widget build(BuildContext context) {
     final bool isFavorite = _favoriteController.isFavorite(this.widget.gif.id);
-    print('[DEBUG] isFavorite retornou $isFavorite');
 
     final favoriteIcon = IconButton(
         icon: isFavorite

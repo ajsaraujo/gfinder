@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:gfinder/widgets/search_field.dart';
+
 import '../control/favorite_gifs.dart';
 import '../control/file_controller.dart';
+import '../control/gif_requester.dart';
+import '../control/navigation_mode.dart';
+import '../widgets/search_field.dart';
 import '../widgets/my_scaffold.dart';
 import '../widgets/gif_grid_view.dart';
-import '../control/gif_requester.dart';
+import '../widgets/my_progress_indicator.dart';
 import '../models/gif.dart';
-import '../control/navigation_mode.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -27,6 +29,14 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  NavigationMode _getNavigationMode() {
+    if (this._search == null) {
+      return NavigationMode.trending;
+    }
+
+    return NavigationMode.search;
+  }
+
   @override
   Widget build(BuildContext context) {
     final _searchField = SearchField(updateSearchValue: (String value) {
@@ -34,16 +44,6 @@ class _HomePageState extends State<HomePage> {
         _search = value;
       });
     });
-    
-    final _progressIndicatorContainer = Container(
-      width: 200.0,
-      height: 200.0,
-      alignment: Alignment.center,
-      child: CircularProgressIndicator(
-        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-        strokeWidth: 5.0,
-      ),
-    );
 
     return MyScaffold(
         body: Column(
@@ -57,14 +57,12 @@ class _HomePageState extends State<HomePage> {
                     case ConnectionState.done:
                       return GifGridView(
                           gifList: Gif.gifListFromSnapshot(snapshot),
-                          navigationMode: _search == null
-                              ? NavigationMode.trending
-                              : NavigationMode.search,
+                          navigationMode: _getNavigationMode(),
                           redrawHomePage: (() {
                             setState(() {});
                           }));
                     default:
-                      return _progressIndicatorContainer;
+                      return MyProgressIndicator();
                   }
                 }))
       ],

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gfinder/control/favorite_gifs.dart';
-import 'package:gfinder/models/gif.dart';
-import 'package:gfinder/widgets/gif_actions_row.dart';
-import 'package:gfinder/widgets/my_scaffold.dart';
+import '../control/favorite_gifs.dart';
+import '../models/gif.dart';
+import '../widgets/gif_actions_row.dart';
+import '../widgets/my_scaffold.dart';
 
 class SingleGifPage extends StatelessWidget {
   final Gif gif;
@@ -10,10 +10,9 @@ class SingleGifPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final favoriteGifs = FavoriteGifs();
     final bool wasFavorite = favoriteGifs.isFavorite(this.gif.id);
-    
+
     final goBackButton = IconButton(
       icon: Icon(Icons.arrow_back),
       onPressed: () {
@@ -22,7 +21,7 @@ class SingleGifPage extends StatelessWidget {
         Navigator.of(context).pop(favoriteStateChanged);
       },
     );
-    
+
     return MyScaffold(
         leading: goBackButton,
         body: Column(
@@ -37,9 +36,7 @@ class SingleGifPage extends StatelessWidget {
             SizedBox(height: 20.0),
             Image.network(this.gif.url),
             SizedBox(height: 20.0),
-            GifActionsRow(
-              gif: this.gif
-            ),
+            GifActionsRow(gif: this.gif),
           ],
         ));
   }

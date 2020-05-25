@@ -1,21 +1,20 @@
-import 'package:gfinder/models/gif.dart';
-
+import '../models/gif.dart';
 import 'file_controller.dart';
 
 class FavoriteGifs {
   Map<String, dynamic> favoriteGifs;
 
+  // Singleton implementation below.
   static final FavoriteGifs _singleton = FavoriteGifs._internal();
-
   factory FavoriteGifs() {
     return _singleton;
   }
-
   FavoriteGifs._internal();
 
-  List favoriteGifList()  {
+  // Class methods.
+  List favoriteGifList() {
     final favoriteGifsList = List<Gif>();
-    
+
     favoriteGifs.forEach((key, value) {
       var newGif = Gif(id: key, title: value['title'], url: value['url']);
       favoriteGifsList.add(newGif);

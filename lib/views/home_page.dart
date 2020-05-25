@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:gfinder/control/favorite_gifs.dart';
-import 'package:gfinder/control/file_controller.dart';
-import 'package:gfinder/widgets/my_scaffold.dart';
-import 'package:gfinder/widgets/gif_grid_view.dart';
-import 'package:gfinder/control/gif_requester.dart';
+import 'package:gfinder/widgets/search_field.dart';
+import '../control/favorite_gifs.dart';
+import '../control/file_controller.dart';
+import '../widgets/my_scaffold.dart';
+import '../widgets/gif_grid_view.dart';
+import '../control/gif_requester.dart';
 import '../models/gif.dart';
 import '../control/navigation_mode.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -27,26 +29,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final _searchField = Padding(
-        padding: EdgeInsets.all(10.0),
-        child: TextField(
-            textInputAction: TextInputAction.search,
-            style: TextStyle(color: Colors.white, fontSize: 18.0),
-            textAlign: TextAlign.left,
-            decoration: InputDecoration(
-              hintText: 'Search GIFs',
-              hintStyle: TextStyle(fontSize: 14.0),
-              labelStyle: TextStyle(color: Colors.white),
-              prefixIcon: Icon(Icons.search, color: Colors.white),
-              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
-              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white))
-            ),
-            onSubmitted: (String value) {
-              setState(() {
-                _search = value;
-              });
-            }));
-
+    final _searchField = SearchField(updateSearchValue: (String value) {
+      setState(() {
+        _search = value;
+      });
+    });
+    
     final _progressIndicatorContainer = Container(
       width: 200.0,
       height: 200.0,
@@ -68,7 +56,7 @@ class _HomePageState extends State<HomePage> {
                   switch (snapshot.connectionState) {
                     case ConnectionState.done:
                       return GifGridView(
-                          gifList: Gif.gifListFromSnapshot(snapshot), 
+                          gifList: Gif.gifListFromSnapshot(snapshot),
                           navigationMode: _search == null
                               ? NavigationMode.trending
                               : NavigationMode.search,

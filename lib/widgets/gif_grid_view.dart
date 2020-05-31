@@ -20,7 +20,21 @@ class GifGridView extends StatelessWidget {
     // The last item will be the "Load More" button.
     if (navigationMode == NavigationMode.search) _itemCount++;
   }
-  
+
+  Widget _buildItem(context, index) {
+    final isLastTile = index == _itemCount - 1;
+    final searchMode = navigationMode == NavigationMode.search;
+
+    if (searchMode && isLastTile) {
+      return LoadMoreGifsButton(
+        redrawHomePage: redrawHomePage,
+      );
+    }
+
+    return GifGridItem(
+        gif: gifList[index], redrawFavoritesPage: redrawFavoritesPage);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -30,18 +44,7 @@ class GifGridView extends StatelessWidget {
         mainAxisSpacing: 10.0,
       ),
       itemCount: _itemCount,
-      itemBuilder: (context, index) {
-        if (navigationMode == NavigationMode.search &&
-            index == _itemCount - 1) {
-          return LoadMoreGifsButton(
-            redrawHomePage: redrawHomePage,
-          );
-        }
-
-        return GifGridItem(
-            gif: gifList[index],
-            redrawFavoritesPage: redrawFavoritesPage);
-      },
+      itemBuilder: _buildItem,
       padding: EdgeInsets.all(10.0),
     );
   }

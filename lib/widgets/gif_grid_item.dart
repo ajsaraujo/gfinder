@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gfinder/models/gif.dart';
-import 'package:gfinder/views/single_gif_page.dart';
 import 'package:share/share.dart';
 import 'package:transparent_image/transparent_image.dart';
+
+import '../models/gif.dart';
+import '../views/single_gif_page.dart';
 
 class GifGridItem extends StatelessWidget {
   final Gif gif;
@@ -10,29 +11,33 @@ class GifGridItem extends StatelessWidget {
 
   GifGridItem({this.gif, this.redrawFavoritesPage});
 
+  void _pushSingleGifPage(BuildContext context) async {
+    final previousPageIsFavoritesPage = redrawFavoritesPage != null;
+
+    final routeToSingleGifPage =
+        MaterialPageRoute(builder: (context) => SingleGifPage(gif: this.gif));
+
+    final favoriteStateChanged =
+        await Navigator.push(context, routeToSingleGifPage);
+
+    if (previousPageIsFavoritesPage && favoriteStateChanged) {
+      print(' > The state of a GIF changed. Redrawing page...');
+      this.redrawFavoritesPage();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final gifImage = FadeInImage.memoryNetwork(
+      placeholder: kTransparentImage,
+      image: this.gif.url,
+      height: 300.0,
+      fit: BoxFit.cover,
+    );
+
     return GestureDetector(
-        onLongPress: () {
-          Share.share(this.gif.url);
-        },
-        onTap: () async {
-          final favoriteStateChanged = await Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => SingleGifPage(gif: this.gif)));
-          if (this.redrawFavoritesPage != null && favoriteStateChanged) {
-            print(' > É preciso redesenhar a página!');
-            this.redrawFavoritesPage();
-          } else {
-            print(' > Não é preciso redesenhar a página!');
-          }
-        },
-        child: FadeInImage.memoryNetwork(
-          placeholder: kTransparentImage,
-          image: this.gif.url,
-          height: 300.0,
-          fit: BoxFit.cover,
-        ));
+        onLongPress: () => Share.share(this.gif.url),
+        onTap: () => _pushSingleGifPage(context),
+        child: gifImage);
   }
 }

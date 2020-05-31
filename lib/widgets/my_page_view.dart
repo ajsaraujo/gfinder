@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gfinder/views/favorite_gifs_page.dart';
-import 'package:gfinder/views/home_page.dart';
+import '../views/favorite_gifs_page.dart';
+import '../views/home_page.dart';
 
 class MyPageView extends StatelessWidget {
   @override

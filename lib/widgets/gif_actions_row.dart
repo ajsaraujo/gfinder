@@ -16,14 +16,9 @@ class GifActionsRow extends StatefulWidget {
 class _GifActionsRowState extends State<GifActionsRow> {
   final _favoriteController = FavoriteGifs();
 
-  void _toggleFavorite(bool isFavorite) {
+  void _toggleFavoriteStateAndRedrawPage() {
     setState(() {
-      if (isFavorite) {
-        _favoriteController.removeGifFromFavorites(this.widget.gif.id);
-      } else {
-        _favoriteController.markGifAsFavorite(
-            this.widget.gif.id, this.widget.gif.url, this.widget.gif.title);
-      }
+      _favoriteController.toggleGifFavoriteState(this.widget.gif);
     });
   }
 
@@ -35,9 +30,7 @@ class _GifActionsRowState extends State<GifActionsRow> {
         icon: isFavorite
             ? Icon(Icons.favorite, color: Colors.red, size: 50.0)
             : Icon(Icons.favorite_border, color: Colors.white, size: 50.0),
-        onPressed: () {
-          _toggleFavorite(isFavorite);
-        });
+        onPressed: _toggleFavoriteStateAndRedrawPage);
 
     final shareIcon = IconButton(
         icon: Icon(Icons.share, color: Colors.white, size: 50.0),

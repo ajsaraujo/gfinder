@@ -27,10 +27,24 @@ class FavoriteGifs {
     return favoriteGifs[gifId] != null;
   }
 
-  void markGifAsFavorite(String gifId, String gifUrl, String gifTitle) {
-    favoriteGifs[gifId] = {};
-    favoriteGifs[gifId]['url'] = gifUrl;
-    favoriteGifs[gifId]['title'] = gifTitle;
+  void toggleGifFavoriteState(Gif gif) {
+    final id = gif.id;
+    
+    if (isFavorite(id)) {
+      removeGifFromFavorites(id);
+    } else {
+      markGifAsFavorite(gif);
+    }
+  }
+
+  void markGifAsFavorite(Gif gif) {
+    final id = gif.id;
+    final url = gif.url;
+    final title = gif.title; 
+
+    favoriteGifs[id] = {};
+    favoriteGifs[id]['url'] = url;
+    favoriteGifs[id]['title'] = title;
 
     FileController.writeFavoriteGifs(favoriteGifs);
   }

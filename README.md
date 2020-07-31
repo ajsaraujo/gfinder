@@ -6,7 +6,7 @@ This is a Gif browsing app that I created to practice Flutter. I started by foll
 ![Share demo](https://media1.giphy.com/media/ftBEenH14QCMuIEoVJ/giphy.webp)![Searching demo](https://media2.giphy.com/media/JmIMHVQQ5PeKRATzUS/giphy.webp)
 
 
-## features
+## Features
 
 - [X] Browse Gifs
 - [X] Search Gifs with a specific keyword
